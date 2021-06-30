@@ -18,25 +18,13 @@
 
 let viewer = null;
 let meshes = [];
-let wfactive = false;
-let token = "";
 
-async function getToken(callback){
-  fetch("https://fe2ypzv7h3.execute-api.us-east-1.amazonaws.com/API1").then(function(response) {
-  // The response is a Response instance.
-  // You parse the data into a useable format using `.json()`
-  return response.json();
-  }).then(function(data) {
-    // `data` is the parsed version of the JSON returned from the above endpoint.
-    callback(data.body.access_token, data.body.expires_in);
-  });
-}
 
 function init(urn) {
 
   const options = {
     env: 'AutodeskProduction',
-    getAccessToken: getToken,
+    accessToken: _access_token,
     isAEC: true
   };
 

@@ -5,14 +5,13 @@
   <title>Autodesk Forge TextGeometry Sample</title>
   <meta charset="utf-8" />
   <link rel="shortcut icon" href="https://github.com/Autodesk-Forge/learn.forge.viewmodels/raw/master/img/favicon.ico">
-  <!-- Common packages: jQuery, Bootstrap -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <!-- Common packages: Bootstrap -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <!-- Autodesk Forge Viewer files -->
   <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
   <!-- this project files -->
+  <script src="https://rtvnonbl58.execute-api.us-east-1.amazonaws.com/latest/_adsk.js"></script>
   <link href="css/main.css" rel="stylesheet" />
   <script src="js/ForgeViewer.js"></script>
   <script>
@@ -21,7 +20,7 @@
   <script src="js/Monaco_Regular.js"></script>
 </head>
 
-<body onload="init('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6am9hby1tYXJ0aW5zLWRlbW8tYnVja2V0L1RleHRHZW9tZXRyeUJhc2UucnZ0')">
+<body onload="init('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGV4dGdlb20tYmxvZy9UZXh0R2VvbWV0cnlCYXNlLnJ2dA==')">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <a href="http://developer.autodesk.com" class="navbar-brand" href="#"><img alt="Autodesk Forge" src="http://developer.static.autodesk.com/images/logo_forge-2-line.png" height="20"></a>
@@ -54,7 +53,7 @@
             <input type="button" onClick="lookAtMe()" class="form-control" value="Look at me" ></button>
           </div>
         </form>
-        <div class="navbar-itemr navbar-form"><a class="form-control" href="https://github.com/JoaoMartins-Forge">Github</a></div>
+        <div class="navbar-itemr navbar-form"><a class="form-control" href="https://github.com/JoaoMartins-Forge/textgeometry-sample">Github</a></div>
       </div>
     </div>
   </nav>
