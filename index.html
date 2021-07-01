@@ -44,7 +44,7 @@
       <div class="collapse navbar-collapse">
         <form class="navbar-form navbar-left" >
           <div class="form-group">
-            <input type="text" class="input" id="txtInput" placeholder="Type something" oninput="addTextGeometry(value)">
+            <input type="text" class="input" id="txtInput" placeholder="Type something" oninput="updateUI(value)">
           </div>
           <div class="form-group">
             <label for="fontSize" class="form-control">Scale</label>
@@ -54,7 +54,7 @@
           </div>
           <div class="form-group">
             <label for="color" class="form-control">Color</label>
-            <input type="color" oninput="changeColor(event)" class="input" id="color" name="head" value="#e66465">
+            <input type="color" oninput="updateUI(event)" class="input" id="color" name="head" value="#e66465">
           </div>
           <div class="form-group">
             <input type="button" onClick="textExt.lookAtMe()" class="form-control" value="Look at me" ></button>
