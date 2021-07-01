@@ -6,11 +6,12 @@
   <meta charset="utf-8" />
   <link rel="shortcut icon" href="https://github.com/Autodesk-Forge/learn.forge.viewmodels/raw/master/img/favicon.ico">
   <!-- Common packages: Bootstrap -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
   <!-- Autodesk Forge Viewer files -->
   <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
   <!-- this project files -->
+<<<<<<< Updated upstream
   <script src="https://rtvnonbl58.execute-api.us-east-1.amazonaws.com/latest/_adsk.js"></script>
   <link href="css/main.css" rel="stylesheet" />
   <script src="js/ForgeViewer.js"></script>
@@ -21,6 +22,35 @@
 </head>
 
 <body onload="init('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGV4dGdlb20tYmxvZy9UZXh0R2VvbWV0cnlCYXNlLnJ2dA==')">
+=======
+  <style type="text/css">
+    html,
+    body {
+      min-height: 100%;
+      height: 100%;
+    }
+    body {
+      padding-top: 5rem; /*space for the top nav bar*/
+    }
+    #forgeViewer {
+      width: 100%;
+      height: calc(100vh - 5rem);
+      position: relative;
+    }
+    /* Navbar */
+    .navbar > .container {
+      width: 100%;
+    }
+    .navbar-itemr {
+      position: relative;
+      float: right;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body onload="initForgeViewer('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGV4dGdlb20tYmxvZy90ZXh0c2FtcGxlLnJ2dA==')">
+>>>>>>> Stashed changes
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <a href="http://developer.autodesk.com" class="navbar-brand" href="#"><img alt="Autodesk Forge" src="http://developer.static.autodesk.com/images/logo_forge-2-line.png" height="20"></a>
@@ -33,6 +63,7 @@
             <label for="slider" class="form-control">Scale</label>
           </div>
           <div class="form-group">
+<<<<<<< Updated upstream
             <input type="range" 
             min="0.1"
             max="2"
@@ -44,6 +75,9 @@
             aria-valuenow="5" 
             class="input"
             oninput="scaleText(value)">
+=======
+            <input type="range" min="0.1" max="2" value="1" step="0.1" id="fontSize" aria-valuemin="1" aria-valuemax="10" aria-valuenow="5" class="input" oninput="updateUI()">
+>>>>>>> Stashed changes
           </div>
           <div class="form-group">
             <label for="slider" class="form-control">Color</label>
@@ -68,4 +102,85 @@
   </form>
 </body>
 
+<<<<<<< Updated upstream
+=======
+<script src="https://rtvnonbl58.execute-api.us-east-1.amazonaws.com/latest/_adsk.js"></script>
+
+<script src="textgeom.ext.js"></script>
+<script>
+  self._typeface_js = { faces: THREE.FontUtils.faces, loadFace: THREE.FontUtils.loadFace };
+</script>
+<script src="fonts/Monaco_Regular.js"></script> <!--this is where you can change the 'Monaco.ttf' font-->
+
+
+<script>
+  let viewer = null;
+  let textExt = null;
+  
+  function updateUI() {
+    textExt.update(
+      document.getElementById("txtInput").value, 
+      document.getElementById("fontSize").value,
+      document.getElementById("color").value)
+  }
+  
+  function initForgeViewer(urn) {
+  
+    const options = {
+      env: 'AutodeskProduction',
+      accessToken: _access_token,
+      isAEC: true
+    };
+  
+    Autodesk.Viewing.Initializer(options, () => {
+
+      const div = document.getElementById('forgeViewer');
+
+      const config = { extensions: ["TextGeomExtension", "GridExtension"] };
+
+      viewer = new Autodesk.Viewing.Private.GuiViewer3D(div, config);
+      viewer.start();
+      viewer.setTheme("light-theme");
+      Autodesk.Viewing.Document.load(`urn:${urn}`, doc => {
+        var viewables = doc.getRoot().getDefaultGeometry();
+        viewer.loadDocumentNode(doc, viewables).then( onLoadFinished );
+      });
+    });
+
+    function onLoadFinished() {
+      textExt = viewer.getExtension("TextGeomExtension");
+      updateUI();
+    }
+  }
+
+  
+  class GridExtension extends Autodesk.Viewing.Extension {
+    constructor(viewer, options) {
+      super(viewer, options);
+      this.grid = null;
+    }
+
+    load() {
+      // add grid
+      this.grid = new THREE.GridHelper(600, 40);
+      this.grid.material.opacity = 0.8;
+      this.grid.material.transparent = true;
+      this.grid.rotation.x = 3.14/2.;
+      this.grid.position.set (0, 0, -40);
+      if (!this.viewer.overlays.hasScene('grid')) {
+          this.viewer.overlays.addScene('grid');
+      }
+      this.viewer.overlays.addMesh(this.grid, 'grid');
+      return true;
+    }
+
+    unload() {
+      return true;
+    }
+  }
+
+  Autodesk.Viewing.theExtensionManager.registerExtension('GridExtension', GridExtension);
+</script>
+
+>>>>>>> Stashed changes
 </html>
