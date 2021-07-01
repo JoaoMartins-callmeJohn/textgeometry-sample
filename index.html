@@ -11,23 +11,18 @@
   <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
   <!-- this project files -->
-  <script src="https://rtvnonbl58.execute-api.us-east-1.amazonaws.com/latest/_adsk.js"></script>
   <link href="css/main.css" rel="stylesheet" />
-  <script src="js/ForgeViewer.js"></script>
-  <script>
-    self._typeface_js = { faces: THREE.FontUtils.faces, loadFace: THREE.FontUtils.loadFace };
-  </script>
-  <script src="js/Monaco_Regular.js"></script>
+  <!-- <script src="js/ForgeViewer.js"></script> -->
 </head>
 
-<body onload="init('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGV4dGdlb20tYmxvZy9UZXh0R2VvbWV0cnlCYXNlLnJ2dA==')">
+<body onload="initForgeViewer('dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGV4dGdlb20tYmxvZy9UZXh0R2VvbWV0cnlCYXNlLnJ2dA==')">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <a href="http://developer.autodesk.com" class="navbar-brand" href="#"><img alt="Autodesk Forge" src="http://developer.static.autodesk.com/images/logo_forge-2-line.png" height="20"></a>
       <div class="collapse navbar-collapse">
         <form class="navbar-form navbar-left" >
           <div class="form-group">
-            <input type="text" class="input" placeholder="Type something" oninput="addTextGeometry(value)">
+            <input type="text" class="input" placeholder="Type something" id="txtInput" oninput="updateUI()">
           </div>
           <div class="form-group">
             <label for="slider" class="form-control">Scale</label>
@@ -38,19 +33,22 @@
             max="2"
             value="1"
             step="0.1"
-            id="slider"
+            id="fontSize"
             aria-valuemin="1"
             aria-valuemax="10"
             aria-valuenow="5" 
             class="input"
-            oninput="scaleText(value)">
+            oninput="updateUI()">
           </div>
           <div class="form-group">
             <label for="slider" class="form-control">Color</label>
-            <input type="color" oninput="changeColor(event)" class="input" id="head" name="head" value="#e66465">
+            <input type="color" oninput="updateUI()" class="input" id="color" name="head" value="#e66465">
           </div>
           <div class="form-group">
-            <input type="button" onClick="lookAtMe()" class="form-control" value="Look at me" ></button>
+            <input type="button" onClick="textExt.lookAtMe()" class="form-control" value="Look at me" ></button>
+          </div>
+          <div class="form-group">
+            <input type="button" onClick="textExt.toggleWireframe()" class="form-control" value="Toggle Wireframe" ></button>
           </div>
         </form>
         <div class="navbar-itemr navbar-form"><a class="form-control" href="https://github.com/JoaoMartins-Forge/textgeometry-sample">Github</a></div>
@@ -67,5 +65,55 @@
     <input id="hiddenUploadField" type="file" name="theFile" style="visibility:hidden" />
   </form>
 </body>
+
+<script src="https://rtvnonbl58.execute-api.us-east-1.amazonaws.com/latest/_adsk.js"></script>
+
+<script src="textgeom.ext.js"></script>
+<script>
+  self._typeface_js = { faces: THREE.FontUtils.faces, loadFace: THREE.FontUtils.loadFace };
+</script>
+<script src="fonts/Monaco_Regular.js"></script> <!--this is where you can change the 'Monaco.ttf' font-->
+
+
+<script>
+  let viewer = null;
+  let textExt = null;
+  
+  function updateUI() {
+    textExt.update(
+      document.getElementById("txtInput").value, 
+      document.getElementById("fontSize").value,
+      document.getElementById("color").value)
+  }
+  
+  function initForgeViewer(urn) {
+  
+    const options = {
+      env: 'AutodeskProduction',
+      accessToken: _access_token,
+      isAEC: true
+    };
+  
+    Autodesk.Viewing.Initializer(options, () => {
+
+      const div = document.getElementById('forgeViewer');
+
+      const config = { extensions: ["TextGeomExtension"] };
+
+      viewer = new Autodesk.Viewing.Private.GuiViewer3D(div, config);
+      viewer.start();
+      viewer.setTheme("light-theme");
+      Autodesk.Viewing.Document.load(`urn:${urn}`, doc => {
+        var viewables = doc.getRoot().getDefaultGeometry();
+        viewer.loadDocumentNode(doc, viewables).then( onLoadFinished );
+      });
+    });
+
+    function onLoadFinished() {
+      textExt = viewer.getExtension("TextGeomExtension");
+      updateUI();
+    }
+  }
+  </script>
 
 </html>
