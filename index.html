@@ -44,20 +44,20 @@
       <div class="collapse navbar-collapse">
         <form class="navbar-form navbar-left" >
           <div class="form-group">
-            <input type="text" class="input" placeholder="Type something" oninput="addTextGeometry(value)">
+            <input type="text" class="input" id="txtInput" placeholder="Type something" oninput="addTextGeometry(value)">
           </div>
           <div class="form-group">
-            <label for="slider" class="form-control">Scale</label>
+            <label for="fontSize" class="form-control">Scale</label>
           </div>
           <div class="form-group">
             <input type="range" min="0.1" max="2" value="1" step="0.1" id="fontSize" aria-valuemin="1" aria-valuemax="10" aria-valuenow="5" class="input" oninput="updateUI()">
           </div>
           <div class="form-group">
-            <label for="slider" class="form-control">Color</label>
-            <input type="color" oninput="changeColor(event)" class="input" id="head" name="head" value="#e66465">
+            <label for="color" class="form-control">Color</label>
+            <input type="color" oninput="changeColor(event)" class="input" id="color" name="head" value="#e66465">
           </div>
           <div class="form-group">
-            <input type="button" onClick="lookAtMe()" class="form-control" value="Look at me" ></button>
+            <input type="button" onClick="textExt.lookAtMe()" class="form-control" value="Look at me" ></button>
           </div>
           <div class="form-group">
             <input type="button" onClick="textExt.toggleWireframe()" class="form-control" value="Toggle Wireframe" ></button>
