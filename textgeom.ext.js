@@ -40,17 +40,20 @@ class TextGeomExtension extends Autodesk.Viewing.Extension {
             this.viewer.overlays.addMesh(this.mesh, this.layer);            
         }
 
+        //And rotation
+        this.mesh.rotation.y = Math.PI * 1.5;
+
         //Then, we set its position
         this.mesh.position.x = -20;
         this.mesh.position.y = 0;
-        this.mesh.position.z = 1;
+        this.mesh.position.z = -20;
 
         this.viewer.impl.invalidate(true, true, true);
         this.viewer.impl.sceneUpdated(true);
     }
 
     lookAtMe(){
-        this.mesh.quaternion.copy(this.viewer.getCamera().quaternion);
+        this.mesh.quaternion.copy(this.viewer.getCamera().clone().quaternion);
         this.viewer.impl.sceneUpdated(true);
     }
 

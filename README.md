@@ -4,7 +4,7 @@ This sample demonstrates how to add textgeometry to Autodesk Forge Viewer.
 
 ### DEMO: https://joaomartins-forge.github.io/textgeometry-sample/
 
-![textgeometry-sample](img/textgeometry-sample.gif)
+![textgeometry-sample](img/textgeometryassembly.gif)
 
 ### GETTING STARTED
 
