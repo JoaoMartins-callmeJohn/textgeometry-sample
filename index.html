@@ -78,8 +78,6 @@
   </form>
 </body>
 
-<script src="https://rtvnonbl58.execute-api.us-east-1.amazonaws.com/latest/_adsk.js"></script>
-
 <script src="grid.ext.js"></script>
 <script src="textgeom.ext.js"></script>
 <script>
@@ -92,6 +90,7 @@
 
   let viewer = null;
   let textExt = null;
+  var _access_token = null;
   
   function updateUI() {
     textExt.update(
@@ -99,9 +98,19 @@
       document.getElementById("fontSize").value,
       document.getElementById("color").value)
   }
+
+  async function getToken(){
+    await fetch('https://lowlblo75l.execute-api.us-east-1.amazonaws.com/default/GetTokenWithAHub').then(response => {
+      return response.json();
+    }).then(data => {
+      _access_token = data;
+    });
+  }
   
-  function initForgeViewer(urn) {
+  async function initForgeViewer(urn) {
   
+    await getToken();
+
     const options = {
       env: 'AutodeskProduction',
       accessToken: _access_token,
