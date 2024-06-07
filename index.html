@@ -103,7 +103,7 @@
     await fetch('https://lowlblo75l.execute-api.us-east-1.amazonaws.com/default/GetTokenWithAHub').then(response => {
       return response.json();
     }).then(data => {
-      _access_token = data;
+      _access_token = data.access_token;
     });
   }
   
